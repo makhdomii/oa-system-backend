@@ -4,12 +4,8 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User, UserDocument } from './schemas/user.schema';
 
-// export type User = any;
-
 @Injectable()
 export class UsersService {
-  private readonly users: User[];
-
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
@@ -35,7 +31,7 @@ export class UsersService {
 
   async findOne(username: string): Promise<any> {
     // return await this.userModel.find((user) => user.username === username);
-    return this.userModel.find({ username });
+    return this.userModel.findOne({ username });
     // return `this is login ${username}`;
   }
 }

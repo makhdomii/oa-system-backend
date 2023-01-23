@@ -12,4 +12,4 @@ import { TicketsController } from './tickets.controller';
   controllers: [TicketsController],
   exports: [TicketsService],
 })
-export class UsersModule {}
+export class TicketsModule {}

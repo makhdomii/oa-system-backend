@@ -9,18 +9,19 @@ import { Ticket, TicketDocument } from './schemas/ticket.schema';
 @Injectable()
 export class TicketsService {
   constructor(
-    @InjectModel(Ticket.name) private readonly userModel: Model<TicketDocument>,
+    @InjectModel(Ticket.name)
+    private readonly ticketModel: Model<TicketDocument>,
   ) {}
 
   async create(createUserDto: CreateTicketDto): Promise<Ticket> {
-    return new this.userModel(createUserDto).save();
+    return new this.ticketModel(createUserDto).save();
   }
 
   async findAll(): Promise<Ticket[]> {
-    return this.userModel.find().exec();
+    return this.ticketModel.find().exec();
   }
 
   async findOne(username: string): Promise<any> {
-    return this.userModel.find({ username });
+    return this.ticketModel.find({ username });
   }
 }

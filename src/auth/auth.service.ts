@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 
@@ -18,9 +23,17 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
-    console.log(user);
-    const payload = { username: user.username, sub: user.userId };
+  async login(user: { username: string; password: string }) {
+    const { username }: { username: string } = user;
+    const userData = await this.usersService.findOne(username);
+    console.log(userData);
+    if (!userData) {
+      throw new HttpException('there is no user', HttpStatus.BAD_REQUEST);
+    }
+    const payload = {
+      username: user.username,
+      // sub: user.userId
+    };
     return {
       access_token: this.jwtService.sign(payload),
     };

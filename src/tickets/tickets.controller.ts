@@ -9,7 +9,7 @@ export class TicketsController {
   constructor(private readonly ticketsService: TicketsService) {}
 
   @Post('/add')
-  async add_ticket(@Body() createTicketDto: CreateTicketDto) {
+  async addTicket(@Body() createTicketDto: CreateTicketDto) {
     return await this.ticketsService.create(createTicketDto);
   }
 
@@ -22,5 +22,10 @@ export class TicketsController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Ticket> {
     return this.ticketsService.findOne(id);
+  }
+
+  @Get('/list')
+  async list(): Promise<Ticket[]> {
+    return this.ticketsService.findAll();
   }
 }
