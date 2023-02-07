@@ -4,8 +4,6 @@ import { Model } from 'mongoose';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { Ticket, TicketDocument } from './schemas/ticket.schema';
 
-// export type User = any;
-
 @Injectable()
 export class TicketsService {
   constructor(
@@ -17,11 +15,28 @@ export class TicketsService {
     return new this.ticketModel(createUserDto).save();
   }
 
+  async reply(id: string, description: string, type: string): Promise<Ticket> {
+    return await this.ticketModel.findOneAndUpdate(
+      { _id: id },
+      {
+        $push: {
+          description: { content: description, type, createdAt: Date.now() },
+        },
+        status: type === 'answer' ? 'answered' : 'pending',
+      },
+      { new: true, safe: true, upsert: true },
+    );
+  }
+
   async findAll(): Promise<Ticket[]> {
     return this.ticketModel.find().exec();
   }
 
-  async findOne(username: string): Promise<any> {
-    return this.ticketModel.find({ username });
+  async findByUser(id: string): Promise<Ticket[]> {
+    return this.ticketModel.find({ _id: id });
+  }
+
+  async findOne(id: string): Promise<any> {
+    return this.ticketModel.findOne({ _id: id });
   }
 }

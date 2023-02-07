@@ -13,6 +13,12 @@ export class TicketsController {
     return await this.ticketsService.create(createTicketDto);
   }
 
+  @Post('/reply/:id')
+  async replyTicket(@Body() { description, type }, @Param('id') id: string) {
+    console.log(description);
+    return await this.ticketsService.reply(id, description, type);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(): Promise<Ticket[]> {
@@ -25,7 +31,7 @@ export class TicketsController {
   }
 
   @Get('/list')
-  async list(): Promise<Ticket[]> {
-    return this.ticketsService.findAll();
+  async list(@Body() id: string): Promise<Ticket[]> {
+    return this.ticketsService.findByUser(id);
   }
 }

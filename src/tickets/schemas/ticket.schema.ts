@@ -4,7 +4,7 @@ import mongoose, { HydratedDocument } from 'mongoose';
 class Description {
   @Prop()
   content: string;
-  @Prop()
+  @Prop({ default: 'question' })
   type: 'question' | 'answer';
   @Prop()
   createdAt: Date;
