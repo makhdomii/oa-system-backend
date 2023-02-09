@@ -11,6 +11,8 @@ export class Account {
 
   @Prop() period: string;
 
+  @Prop() cost: string;
+
   @Prop({ default: 'active' }) status: 'active' | 'deactive';
 }
 

@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
-export type OrdersDocument = HydratedDocument<Orders>;
+export type ConfigDocument = HydratedDocument<Config>;
 
 @Schema()
-export class Orders {
+export class Config {
   @Prop() price: string;
 
   @Prop() configs: mongoose.Schema.Types.ObjectId;
@@ -21,4 +21,4 @@ export class Orders {
     | 'rejected';
 }
 
-export const OrdersSchema = SchemaFactory.createForClass(Orders);
+export const ConfigSchema = SchemaFactory.createForClass(Config);
